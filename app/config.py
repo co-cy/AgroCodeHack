@@ -12,3 +12,8 @@ class DatabaseConfig(_Config):
 
 class JWTConfig(_Config):
     secret_key = "agro_code_hack"
+
+
+class UvicornConfig(_Config):
+    host = "0.0.0.0"
+    port = 6969
