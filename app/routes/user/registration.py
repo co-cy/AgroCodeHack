@@ -9,6 +9,7 @@ router = APIRouter()
 
 
 @router.post("/reg")
+@router.post("/register")
 @router.post("/registration")
 async def registration(user_info: CreateUser, db_session=Depends(get_session)):
     login = user_info.login
