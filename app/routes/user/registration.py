@@ -3,8 +3,8 @@ from app.database.tables.user import User
 from fastapi import APIRouter, Depends
 from app.database import get_session
 from sqlalchemy.future import select
+from app.auth import access_security
 from fastapi import HTTPException
-
 router = APIRouter()
 
 
@@ -19,7 +19,11 @@ async def registration(user_info: CreateUser, db_session=Depends(get_session)):
     if any(find_user):
         raise HTTPException(status_code=422, detail="Login is not unique")
 
-    new_user = User(login=login, password=user_info.password)
+    token = access_security.create_access_token({
+        "login": user_info.login,
+        "password": user_info.password
+    })
+    new_user = User(login=login, password=user_info.password, token=token)
 
     db_session.add(new_user)
     await db_session.commit()
