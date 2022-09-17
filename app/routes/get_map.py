@@ -110,7 +110,7 @@ def get_map(req: MapRequest):
         top_left_chunk_top_left_x = pixel.x // 128 * 128
         top_left_chunk_top_left_y = pixel.y // 128 * 128
         with open(
-                f'./chunks/{top_left_chunk_top_left_x}_{top_left_chunk_top_left_y}__{top_left_chunk_top_left_x + 127}_{top_left_chunk_top_left_y + 127}_{req.scale}',
+                f'./chunks/{top_left_chunk_top_left_x}_{top_left_chunk_top_left_y}__{top_left_chunk_top_left_x + 127}_{top_left_chunk_top_left_y + 127}_1',
                 'rb') as f:
             pixels_data.append(pickle.load(f)[pixel.x % 128][pixel.y % 128])
 
