@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 
 from . import index, get_map
-from .user import registration, login
+from .user import registration, login, get_vineyards, set_vineyards
 
 
 def init_routes(app: FastAPI):
     len_self_path = len(__name__.split("."))
 
     list_routes = [
-        registration, index, login, get_map
+        registration, index, login, get_map, get_vineyards, set_vineyards
     ]
 
     for route in list_routes:
