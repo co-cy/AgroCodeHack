@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 
 from . import index
-from .user import registration
+from .user import registration, login
 
 
 def init_routes(app: FastAPI):
     len_self_path = len(__name__.split("."))
 
     list_routes = [
-        registration, index
+        registration, index, login
     ]
 
     for route in list_routes:
