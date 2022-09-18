@@ -114,18 +114,30 @@ def get_map(req: MapRequest):
                 'rb') as f:
             pixels_data.append(pickle.load(f)[pixel.x % 128][pixel.y % 128])
 
-    sim = cosine_similarity(pixels_data, data.reshape(-1, data.shape[-1]))
-    sim[sim < 0] = 0
-    sim = sim.mean(axis=0)
-    sim = sim.reshape(data.shape[0], data.shape[1])
-    for x in range(data.shape[0]):
-        for y in range(data.shape[1]):
-            if data[x][y][0] == 0:
-                sim[x][y] = -1
-            elif data[x][y][7] == 1:
-                sim[x][y] = 2
-            elif data[x][y][1] == 7:
-                sim[x][y] = -2
+    sim = None
+    if len(pixels_data) == 0:
+        sim = np.zeros((data.shape[0], data.shape[1]))
+        for x in range(data.shape[0]):
+            for y in range(data.shape[1]):
+                if data[x][y][0] == 0:
+                    sim[x][y] = -1
+                elif data[x][y][7] == 1:
+                    sim[x][y] = 2
+                elif data[x][y][1] == 7:
+                    sim[x][y] = -2
+    else:
+        sim = cosine_similarity(pixels_data, data.reshape(-1, data.shape[-1]))
+        sim[sim < 0] = 0
+        sim = sim.mean(axis=0)
+        sim = sim.reshape(data.shape[0], data.shape[1])
+        for x in range(data.shape[0]):
+            for y in range(data.shape[1]):
+                if data[x][y][0] == 0:
+                    sim[x][y] = -1
+                elif data[x][y][7] == 1:
+                    sim[x][y] = 2
+                elif data[x][y][1] == 7:
+                    sim[x][y] = -2
 
     return {
         "data": sim.tolist(),
